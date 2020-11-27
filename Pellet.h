@@ -1,7 +1,8 @@
 #pragma once
 #include "Game.h"
+#include "Wall.h"
 
-class Pellet
+class Pellet : public Wall
 {
 
 private:
@@ -10,7 +11,7 @@ private:
 	bool Consumed;
 
 public: 
-	Pellet(int newX, int newY);
+	//Pellet(int newX, int newY);
 
 };
 

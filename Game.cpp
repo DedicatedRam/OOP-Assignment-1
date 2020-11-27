@@ -1,11 +1,17 @@
 #include "Game.h"
-
+#include <cstdlib>
+#include <time.h>
 void Game::Setup()
 {
-    walls.push_back(Wall(4, 7));
+    srand(time(NULL));
+    int r1 = rand() % (1 + 19);
+    int r2 = rand() % (1 + 19);
+    walls.push_back(Wall(r1, r2));
+
+   /* walls.push_back(Wall(4, 7));
     walls.push_back(Wall(9, 15));
     walls.push_back(Wall(15, 4));
-    walls.push_back(Wall(1, 1));
+    walls.push_back(Wall(1, 1))*/;
 }
 
 void Game::ProcessInput(int key)

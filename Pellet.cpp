@@ -3,8 +3,9 @@
 
 
 // Constructor
-public Pellet::Pellet(int newX, int newY)
-{
-	
-}
+//public Pellet::Pellet(int newX, int newY)
+//	: this.x(newX), this.y(newY)
+//{
+//	
+//}
 
