@@ -1,11 +1,22 @@
 #include "Pellet.h"
-
+#include "Wall.h"
 
 
 // Constructor
-//public Pellet::Pellet(int newX, int newY)
-//	: this.x(newX), this.y(newY)
-//{
-//	
-//}
+
+Pellet::Pellet(int newX, int newY)
+{
+	x = newX;
+	y = newY;
+	Wall(x, y);
+	Consumed = false;
+	
+}
+
+// Functions 
+
+void Pellet::genPelletsLvl1() 
+{
+	
+}
 

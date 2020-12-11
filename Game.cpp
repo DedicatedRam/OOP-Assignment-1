@@ -1,17 +1,39 @@
 #include "Game.h"
 #include <cstdlib>
 #include <time.h>
+#include "Pellet.h"
+#include "Player.h"
+
 void Game::Setup()
 {
     srand(time(NULL));
     int r1 = rand() % (1 + 19);
     int r2 = rand() % (1 + 19);
-    walls.push_back(Wall(r1, r2));
+    //walls.push_back(Wall(r1, r2));
+    //Pellet p1 (r1, r2);
+
+    genPellet(r1, r2);
+    genPellet(r2, r1);
 
    /* walls.push_back(Wall(4, 7));
     walls.push_back(Wall(9, 15));
     walls.push_back(Wall(15, 4));
     walls.push_back(Wall(1, 1))*/;
+}
+
+bool Game::checkIfEaten(int x, int y) 
+{
+    if (player.IsAtPosition(x, y)) {
+        //walls.pop_back(Wall(x, y));
+        return true;
+    }
+    return false;
+}
+// for loop to check where the wall position is walls.erase(walls.begin() + indexOfWall);
+
+void Game::genPellet(int x, int y) {
+    walls.push_back(Wall(x, y));
+    bool Consumed = false;
 }
 
 void Game::ProcessInput(int key)
