@@ -21,24 +21,40 @@ void Game::Setup()
     walls.push_back(Wall(1, 1))*/;
 }
 
+
 bool Game::checkIfEaten(int x, int y) 
 {
-    if (player.IsAtPosition(x, y)) {
-        //walls.pop_back(Wall(x, y));
-        return true;
-    }
-    return false;
+    // dont need to loop anymore, jsut check if pellet pos is same as player pos
+    //for (int row = 1; row<=SIZE; row++)
+    //{
+    //    for (int col = 1; col <=SIZE; col++)
+    //    {
+            //if (player.IsAtPosition(row, col)) {
+                // TODO: this wont work like this
+                //       insteasd of detleing it jsut move it to a different position
+             //   walls.erase(walls.begin + (row, col));
+
+            //}
+    //    }
+    //} 
+    return true;
 }
 // for loop to check where the wall position is walls.erase(walls.begin() + indexOfWall);
 
+
+// TODO: don't pass in an x and a y here, generate random nubmers inside the function
+//       in here you can check the grid to see if there's a wall or anything before deciding the random position is good and creating a Pellet object
 void Game::genPellet(int x, int y) {
-    walls.push_back(Wall(x, y));
+    Pellet pellet();
+    pellet.setX(x);
+    pellet.setY(y);
     bool Consumed = false;
 }
 
 void Game::ProcessInput(int key)
 {
     player.Move(key);
+    //checkIfEaten(r1, r2);
 }
 
 /// <summary>

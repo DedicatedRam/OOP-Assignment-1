@@ -142,6 +142,7 @@
     <ClCompile Include="PlayerTail.cpp" />
     <ClCompile Include="RandomNumberGenerator.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +152,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerTail.h" />
     <ClInclude Include="RandomNumberGenerator.h" />
+    <ClInclude Include="Tile.h" />
     <ClInclude Include="Wall.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

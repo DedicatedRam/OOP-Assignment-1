@@ -1,9 +1,10 @@
 #pragma once
 #include "Game.h"
-#include "Wall.h"
+#include "Tile.h"
 #include "Player.h"
 
-class Pellet : public Wall
+// TODO: inheriting from Wall is a little weird, maybe make a generic Tile base class
+class Pellet : public Tile
 {
 
 private:
@@ -12,7 +13,9 @@ private:
 	bool Consumed;
 
 public: 
-	Pellet(int newX, int newY);
+	Pellet();
 	void genPelletsLvl1();
+	void setX(int x);
+	void setY(int y);
 };
 

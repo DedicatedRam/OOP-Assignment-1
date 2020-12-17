@@ -4,11 +4,10 @@
 
 // Constructor
 
-Pellet::Pellet(int newX, int newY)
+
+Pellet::Pellet()
 {
-	x = newX;
-	y = newY;
-	Wall(x, y);
+
 	Consumed = false;
 	
 }
