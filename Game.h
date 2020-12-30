@@ -5,6 +5,8 @@
 #include <vector>
 #include "Player.h"
 #include "Wall.h"
+#include "Pellet.h"
+#include "Tile.h"
 
 using namespace std;
 
@@ -12,6 +14,7 @@ class Game
 {
    public:
       Player player;
+      
       Pellet pellet;
       // TODO: collection of walls is good, you can add those to here
       //       but you probably also want a single Pellet object

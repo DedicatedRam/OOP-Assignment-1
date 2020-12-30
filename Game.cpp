@@ -45,7 +45,7 @@ bool Game::checkIfEaten(int x, int y)
 // TODO: don't pass in an x and a y here, generate random nubmers inside the function
 //       in here you can check the grid to see if there's a wall or anything before deciding the random position is good and creating a Pellet object
 void Game::genPellet(int x, int y) {
-    Pellet pellet();
+    Pellet pellet;
     pellet.setX(x);
     pellet.setY(y);
     bool Consumed = false;

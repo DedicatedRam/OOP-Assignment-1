@@ -1,5 +1,5 @@
 #pragma once
-#include "Game.h"
+using namespace std;
 #include "Tile.h"
 #include "Player.h"
 
