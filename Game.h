@@ -24,6 +24,6 @@ class Game
       vector<vector<char>> PrepareGrid();
       bool IsRunning();
       bool IsWallAtPosition(int x, int y); // TODO: can have one of these for pellets too
-      void genPellet(int x, int y);
+      void genPellet();
       bool checkIfEaten(int x, int y);
 };

@@ -11,11 +11,15 @@ private:
 	// Attributes
 	int x, y;
 	bool Consumed;
+	char symbol;
 
 public: 
 	Pellet();
 	void genPelletsLvl1();
+	char getSymbol();
 	void setX(int x);
 	void setY(int y);
+	int getX();
+	int getY();
 };
 

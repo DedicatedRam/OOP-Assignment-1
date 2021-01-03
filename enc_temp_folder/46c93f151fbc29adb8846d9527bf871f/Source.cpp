@@ -50,6 +50,7 @@ int main()
                 DrawRectangleLines(x * cellSize, y * cellSize, cellSize, cellSize, DARKGRAY);
             }
         }
+
         EndDrawing();
     }
 

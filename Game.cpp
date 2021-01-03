@@ -6,17 +6,17 @@
 
 void Game::Setup()
 {
-    srand(time(NULL));
-    int r1 = rand() % (1 + 19);
-    int r2 = rand() % (1 + 19);
+    
     //walls.push_back(Wall(r1, r2));
     //Pellet p1 (r1, r2);
 
-    genPellet(r1, r2);
-    genPellet(r2, r1);
+    //assign the games pellet at some random position
+    genPellet();
+    
 
-   /* walls.push_back(Wall(4, 7));
-    walls.push_back(Wall(9, 15));
+    
+    //walls.push_back(Wall(4, 7));
+   /*walls.push_back(Wall(9, 15));
     walls.push_back(Wall(15, 4));
     walls.push_back(Wall(1, 1))*/;
 }
@@ -24,6 +24,9 @@ void Game::Setup()
 
 bool Game::checkIfEaten(int x, int y) 
 {
+    if ((player.GetX() == pellet.getX()) && (player.GetY() == pellet.getY())) {
+
+    }
     // dont need to loop anymore, jsut check if pellet pos is same as player pos
     //for (int row = 1; row<=SIZE; row++)
     //{
@@ -44,11 +47,16 @@ bool Game::checkIfEaten(int x, int y)
 
 // TODO: don't pass in an x and a y here, generate random nubmers inside the function
 //       in here you can check the grid to see if there's a wall or anything before deciding the random position is good and creating a Pellet object
-void Game::genPellet(int x, int y) {
-    Pellet pellet;
-    pellet.setX(x);
-    pellet.setY(y);
-    bool Consumed = false;
+void Game::genPellet() {
+    Pellet p; 
+    srand(time(NULL));
+    int r1 = rand() % (1 + 19);
+    int r2 = rand() % (1 + 19);
+    //set the pellets position
+    p.setX(r1);
+    p.setY(r2);
+    //assign this pellet to the game
+    this->pellet = p;
 }
 
 void Game::ProcessInput(int key)
@@ -82,6 +90,9 @@ vector<vector<char>> Game::PrepareGrid()
             else if (IsWallAtPosition(col, row))
             {
                 line.push_back(WALL);
+            }
+            else if ((row == pellet.getX()) && (col == pellet.getY())){
+                line.push_back(PELLET);
             }
             else
             {
