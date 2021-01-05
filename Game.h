@@ -25,5 +25,5 @@ class Game
       bool IsRunning();
       bool IsWallAtPosition(int x, int y); // TODO: can have one of these for pellets too
       void genPellet();
-      bool checkIfEaten(int x, int y);
+      void checkIfEaten();
 };

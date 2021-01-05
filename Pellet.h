@@ -14,8 +14,9 @@ private:
 	char symbol;
 
 public: 
+	~Pellet();
 	Pellet();
-	void genPelletsLvl1();
+	Pellet(int X, int Y);
 	char getSymbol();
 	void setX(int x);
 	void setY(int y);

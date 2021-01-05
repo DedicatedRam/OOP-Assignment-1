@@ -3,6 +3,7 @@
 #include <time.h>
 #include "Pellet.h"
 #include "Player.h"
+#include <iostream>
 
 void Game::Setup()
 {
@@ -22,25 +23,17 @@ void Game::Setup()
 }
 
 
-bool Game::checkIfEaten(int x, int y) 
+void Game::checkIfEaten() 
 {
     if ((player.GetX() == pellet.getX()) && (player.GetY() == pellet.getY())) {
-
+        
+        cout << "Player: (" << player.GetX() << ", " << player.GetY() << ")" << endl;
+        cout << "Pellet: (" << pellet.getX() << ", " << pellet.getY() << ")" << endl;
+        pellet.~Pellet();
+        genPellet();
+        cout << "New pellet loc: (" << pellet.getX() << ", " << pellet.getY() << ")" << endl;
     }
-    // dont need to loop anymore, jsut check if pellet pos is same as player pos
-    //for (int row = 1; row<=SIZE; row++)
-    //{
-    //    for (int col = 1; col <=SIZE; col++)
-    //    {
-            //if (player.IsAtPosition(row, col)) {
-                // TODO: this wont work like this
-                //       insteasd of detleing it jsut move it to a different position
-             //   walls.erase(walls.begin + (row, col));
-
-            //}
-    //    }
-    //} 
-    return true;
+    
 }
 // for loop to check where the wall position is walls.erase(walls.begin() + indexOfWall);
 
@@ -48,21 +41,23 @@ bool Game::checkIfEaten(int x, int y)
 // TODO: don't pass in an x and a y here, generate random nubmers inside the function
 //       in here you can check the grid to see if there's a wall or anything before deciding the random position is good and creating a Pellet object
 void Game::genPellet() {
-    Pellet p; 
+     
     srand(time(NULL));
     int r1 = rand() % (1 + 19);
     int r2 = rand() % (1 + 19);
+    Pellet p(r1, r2);
     //set the pellets position
-    p.setX(r1);
-    p.setY(r2);
+    //p.setX(r1);
+    //p.setY(r2);
     //assign this pellet to the game
     this->pellet = p;
 }
 
 void Game::ProcessInput(int key)
 {
+    checkIfEaten();
     player.Move(key);
-    //checkIfEaten(r1, r2);
+    
 }
 
 /// <summary>
@@ -91,7 +86,7 @@ vector<vector<char>> Game::PrepareGrid()
             {
                 line.push_back(WALL);
             }
-            else if ((row == pellet.getX()) && (col == pellet.getY())){
+            else if ((row == pellet.getY()) && (col == pellet.getX())){
                 line.push_back(PELLET);
             }
             else
