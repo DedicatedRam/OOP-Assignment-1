@@ -5,33 +5,31 @@
 #include "Player.h"
 #include <iostream>
 
+
+
 void Game::Setup()
 {
     
-    //walls.push_back(Wall(r1, r2));
-    //Pellet p1 (r1, r2);
-
     //assign the games pellet at some random position
     genPellet();
     
 
     
-    //walls.push_back(Wall(4, 7));
-   /*walls.push_back(Wall(9, 15));
-    walls.push_back(Wall(15, 4));
-    walls.push_back(Wall(1, 1))*/;
 }
 
+int Game::getScore() {
 
+    return this->Score;
+}
 void Game::checkIfEaten() 
 {
     if ((player.GetX() == pellet.getX()) && (player.GetY() == pellet.getY())) {
         
-        cout << "Player: (" << player.GetX() << ", " << player.GetY() << ")" << endl;
-        cout << "Pellet: (" << pellet.getX() << ", " << pellet.getY() << ")" << endl;
+        
         pellet.~Pellet();
         genPellet();
-        cout << "New pellet loc: (" << pellet.getX() << ", " << pellet.getY() << ")" << endl;
+        cout << Score << endl;
+        Score++;
     }
     
 }
@@ -45,18 +43,32 @@ void Game::genPellet() {
     srand(time(NULL));
     int r1 = rand() % (1 + 19);
     int r2 = rand() % (1 + 19);
+    if (r2 == 0) { genPellet(); }
+    if (r1 == 0) { genPellet(); }
     Pellet p(r1, r2);
     //set the pellets position
-    //p.setX(r1);
-    //p.setY(r2);
     //assign this pellet to the game
     this->pellet = p;
 }
 
+
+
+int Game::getLastKeyPressed() {
+    return this->lastKeyPressed;
+}
+void Game::setLastKeyPressed(int key) {
+    this->lastKeyPressed = key;
+}
+
+
+
 void Game::ProcessInput(int key)
 {
-    checkIfEaten();
-    player.Move(key);
+        
+    
+        player.Move(key);
+        checkIfEaten();
+        this_thread::sleep_for(chrono::milliseconds(50));
     
 }
 
