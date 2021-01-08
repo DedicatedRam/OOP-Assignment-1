@@ -6,15 +6,22 @@
 #include <iostream>
 
 
+int Game::getLevel() {
+    return this->level;
+}
 
 void Game::Setup()
 {
-    
+    srand(time(NULL));
     //assign the games pellet at some random position
     genPellet();
-    
+    genObs();
 
     
+}
+
+Player Game::getPlayer() {
+    return this->player;
 }
 
 int Game::getScore() {
@@ -25,26 +32,79 @@ void Game::checkIfEaten()
 {
     if ((player.GetX() == pellet.getX()) && (player.GetY() == pellet.getY())) {
         
-        
-        pellet.~Pellet();
+        cout << pellet.getX() << ", " << pellet.getY() << endl;
+        //pellet.~Pellet();
         genPellet();
         cout << Score << endl;
         Score++;
+        genObs();
     }
     
 }
-// for loop to check where the wall position is walls.erase(walls.begin() + indexOfWall);
 
 
+void Game::checkObsCol() {  
+    for each (Obstacle Obs in ObsArray)
+    {
+        if ((player.GetX() == Obs.getX()) && (player.GetY() == Obs.getY())) {
+            this->gameRunning = false;
+        }
+    }
+}
+
+Obstacle Game::randObsGen() {
+    int r1 = 0;
+    int r2 = 0;
+    do
+    {
+        r2 = rand() % (20);
+    } while ((r2 == 0) && (r2 != pellet.getY()) && (r2 !=player.GetY()));
+    do
+    {
+        r1 = rand() % (20);
+    } while ((r1 == 0) && (r1 != pellet.getX()) && (r1 != player.GetX()));
+    Obstacle ob(r1, r2);
+    
+    return ob;
+}
+
+void Game::genObs() {
+    if (level == 2) {
+        this->ObsArray[0] = randObsGen();
+        this->ObsArray[1] = randObsGen();
+        this->ObsArray[2] = randObsGen();
+        this->ObsArray[3] = randObsGen();
+        this->ObsArray[4] = randObsGen();
+    }
+    if (level == 3) {
+        this->ObsArray[0] = randObsGen();
+        this->ObsArray[1] = randObsGen();
+        this->ObsArray[2] = randObsGen();
+        this->ObsArray[3] = randObsGen();
+        this->ObsArray[4] = randObsGen();
+        this->ObsArray[5] = randObsGen();
+        this->ObsArray[6] = randObsGen();
+        this->ObsArray[7] = randObsGen();
+        this->ObsArray[8] = randObsGen();
+        this->ObsArray[9] = randObsGen();
+    }
+}
 // TODO: don't pass in an x and a y here, generate random nubmers inside the function
 //       in here you can check the grid to see if there's a wall or anything before deciding the random position is good and creating a Pellet object
 void Game::genPellet() {
      
-    srand(time(NULL));
-    int r1 = rand() % (1 + 19);
-    int r2 = rand() % (1 + 19);
-    if (r2 == 0) { genPellet(); }
-    if (r1 == 0) { genPellet(); }
+    
+    int r1 = 0;
+    int r2 = 0;
+    do
+    {
+        r2 = rand() % (20);
+    } while (r2 ==0);
+    do
+    {
+        r1 = rand() % (20);
+    } while (r1 == 0);
+
     Pellet p(r1, r2);
     //set the pellets position
     //assign this pellet to the game
@@ -68,8 +128,16 @@ void Game::ProcessInput(int key)
     
         player.Move(key);
         checkIfEaten();
-        this_thread::sleep_for(chrono::milliseconds(50));
-    
+        checkObsCol();
+        this_thread::sleep_for(chrono::milliseconds(100));
+        if ((Score == 5) && (level == 1)) {
+            level = 2;
+            Score = 0;
+        }
+        if ((Score == 5) && (level == 2)) {
+            level = 3;
+            Score = 0;
+        }
 }
 
 /// <summary>
@@ -94,11 +162,19 @@ vector<vector<char>> Game::PrepareGrid()
             {
                 line.push_back(player.GetSymbol());
             }
-            else if (IsWallAtPosition(col, row))
+            if (IsWallAtPosition(col, row))
             {
                 line.push_back(WALL);
             }
-            else if ((row == pellet.getY()) && (col == pellet.getX())){
+            for each (Obstacle Obs in ObsArray) 
+            {
+                if ((row == Obs.getY()) && (col == Obs.getX())) {
+                    line.push_back(OBSTACLE);
+                }
+            }
+            // needs changing to for each loop to account for collection of obstacles
+            
+            if ((row == pellet.getY()) && (col == pellet.getX())){
                 line.push_back(PELLET);
             }
             else
@@ -131,5 +207,5 @@ bool Game::IsRunning()
 {
     // depending on your game you'll need to modify this to return false
     // maybe it's when the player runs out of moves, maybe it's when they get caught, it's up to you!
-    return true;
+    return gameRunning;
 }

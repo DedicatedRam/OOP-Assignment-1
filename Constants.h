@@ -9,6 +9,7 @@
 #define WALL      'W'
 #define FLOOR     'F'
 #define PELLET	  'T'
+#define OBSTACLE  'O'
 
 // the command letters to move the mouse on the maze
 #define KEY_RIGHT 262

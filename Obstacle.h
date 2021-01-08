@@ -1,25 +1,24 @@
 #pragma once
-using namespace std;
 #include "Tile.h"
-#include "Player.h"
+#include "Constants.h"
 
-class Pellet : public Tile
+class Obstacle   : 	public Tile
 {
 
 private:
-	// Attributes
 	int x, y;
-	bool Consumed;
 	char symbol;
 
-public: 
-	~Pellet();
-	Pellet();
-	Pellet(int X, int Y);
+public:
+	~Obstacle();
+	Obstacle();
+	Obstacle(int x, int y);
 	char getSymbol();
 	void setX(int x);
 	void setY(int y);
 	int getX();
 	int getY();
+
+
 };
 

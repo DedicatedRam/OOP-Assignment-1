@@ -13,7 +13,10 @@ int main()
     {
         BeginDrawing();
         ClearBackground(DARKGRAY);
-        DrawText("Your score: " + game.getScore() , 610, 10, 20, BLACK);
+        string scoreText = "Your score: " + to_string(game.getScore());
+        string levelText = "Current level: " + to_string(game.getLevel());
+        DrawText(scoreText.c_str() , 610, 10, 20, BLACK);
+        DrawText(levelText.c_str(), 610, 30, 20, BLACK);
 
         if (game.IsRunning())
         {
@@ -35,20 +38,13 @@ int main()
 
             if (IsKeyDown(KEY_DOWN))  {
                 game.setLastKeyPressed(KEY_DOWN);
-
-                
-
                 game.ProcessInput(KEY_DOWN);
-                
-                
-                
-                
             }
             
         }
         else
         {
-            DrawText("TODO: Why did the game end?", 610, 10, 20, LIGHTGRAY);
+            DrawText("You died!", 610, 50, 40, LIGHTGRAY);
         }
 
         const int cellSize = (int)((float)GetScreenHeight() / (float)(SIZE));
@@ -68,6 +64,7 @@ int main()
                     case WALL:   DrawRectangle(xPosition, yPosition, cellSize, cellSize, LIGHTGRAY); break;
                     case PLAYER: DrawRectangle(xPosition, yPosition, cellSize, cellSize, GREEN);     break;
                     case PELLET: DrawRectangle(xPosition, yPosition, cellSize, cellSize, RED);       break;
+                    case OBSTACLE:  DrawRectangle(xPosition, yPosition, cellSize, cellSize, BLACK);  break;
                     default:     assert(false);  // if this hits you probably forgot to add your new tile type :)
                 }
 

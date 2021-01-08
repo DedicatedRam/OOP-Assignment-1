@@ -57,6 +57,10 @@ void Player::Move(int key)
     }
 }
 
+bool Player::isAlive() {
+    return this->alive;
+}
+
 void Player::UpdatePosition(int dx, int dy)
 {
     x += dx;

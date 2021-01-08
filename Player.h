@@ -13,6 +13,7 @@ class Player
         int GetY();
         char GetSymbol() const;
         bool IsAtPosition(int x, int y);
+        bool isAlive();
 
         // mutators
         void Move(int key);
