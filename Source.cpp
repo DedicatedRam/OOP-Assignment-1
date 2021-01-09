@@ -37,10 +37,12 @@ int main()
             }
 
             if (IsKeyDown(KEY_DOWN))  {
+
                 game.setLastKeyPressed(KEY_DOWN);
                 game.ProcessInput(KEY_DOWN);
             }
-            
+            string info = to_string(game.getPlayer().GetX()) + to_string(game.getPlayer().GetY());
+            DrawText(info.c_str(), 610, 70, 20, BLACK);
         }
         else
         {

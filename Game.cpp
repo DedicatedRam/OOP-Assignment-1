@@ -17,7 +17,7 @@ void Game::Setup()
     genPellet();
     genObs();
 
-    
+
 }
 
 Player Game::getPlayer() {
@@ -28,24 +28,26 @@ int Game::getScore() {
 
     return this->Score;
 }
-void Game::checkIfEaten() 
+void Game::checkIfEaten()
 {
     if ((player.GetX() == pellet.getX()) && (player.GetY() == pellet.getY())) {
-        
+
         cout << pellet.getX() << ", " << pellet.getY() << endl;
-        //pellet.~Pellet();
         genPellet();
-        cout << Score << endl;
         Score++;
         genObs();
     }
-    
+
 }
 
 
-void Game::checkObsCol() {  
+void Game::checkObsCol() {
+    int x = 0;
     for each (Obstacle Obs in ObsArray)
     {
+        if (level == 2) {
+            cout << x << ": " << Obs.getX() << ", " << Obs.getY() << endl;
+        }
         if ((player.GetX() == Obs.getX()) && (player.GetY() == Obs.getY())) {
             this->gameRunning = false;
         }
@@ -58,13 +60,13 @@ Obstacle Game::randObsGen() {
     do
     {
         r2 = rand() % (20);
-    } while ((r2 == 0) && (r2 != pellet.getY()) && (r2 !=player.GetY()));
+    } while ((r2 == 0) && (r2 != pellet.getY()) && (r2 != player.GetY()));
     do
     {
-        r1 = rand() % (20);
+        r1 = rand() % (20) ;
     } while ((r1 == 0) && (r1 != pellet.getX()) && (r1 != player.GetX()));
-    Obstacle ob(r1, r2);
-    
+    Obstacle ob(r1+1, r2+1);
+
     return ob;
 }
 
@@ -75,6 +77,7 @@ void Game::genObs() {
         this->ObsArray[2] = randObsGen();
         this->ObsArray[3] = randObsGen();
         this->ObsArray[4] = randObsGen();
+        
     }
     if (level == 3) {
         this->ObsArray[0] = randObsGen();
@@ -89,17 +92,16 @@ void Game::genObs() {
         this->ObsArray[9] = randObsGen();
     }
 }
-// TODO: don't pass in an x and a y here, generate random nubmers inside the function
 //       in here you can check the grid to see if there's a wall or anything before deciding the random position is good and creating a Pellet object
 void Game::genPellet() {
-     
-    
+
+
     int r1 = 0;
     int r2 = 0;
     do
     {
         r2 = rand() % (20);
-    } while (r2 ==0);
+    } while (r2 == 0);
     do
     {
         r1 = rand() % (20);
@@ -124,20 +126,20 @@ void Game::setLastKeyPressed(int key) {
 
 void Game::ProcessInput(int key)
 {
-        
-    
-        player.Move(key);
-        checkIfEaten();
-        checkObsCol();
-        this_thread::sleep_for(chrono::milliseconds(100));
-        if ((Score == 5) && (level == 1)) {
-            level = 2;
-            Score = 0;
-        }
-        if ((Score == 5) && (level == 2)) {
-            level = 3;
-            Score = 0;
-        }
+
+    this_thread::sleep_for(chrono::milliseconds(100));
+    player.Move(key);
+    checkIfEaten();
+    checkObsCol();
+
+    if ((Score == 5) && (level == 1)) {
+        level = 2;
+        Score = 0;
+    }
+    if ((Score == 5) && (level == 2)) {
+        level = 3;
+        Score = 0;
+    }
 }
 
 /// <summary>
@@ -158,23 +160,32 @@ vector<vector<char>> Game::PrepareGrid()
         // for each column, work out what's in that position and add the relevant char to the 2D grid
         for (int col = 1; col <= SIZE; ++col)
         {
+            Obstacle cellAsObstacle(col, row);
             if (row == player.GetY() && col == player.GetX())
             {
                 line.push_back(player.GetSymbol());
             }
-            if (IsWallAtPosition(col, row))
+
+
+            else if (IsWallAtPosition(col, row))
             {
                 line.push_back(WALL);
             }
-            for each (Obstacle Obs in ObsArray) 
+
+            // Count returns the number of times cellAsObstacle is found in the ObsArray, thus if it returns 0, we can treat this as false
+            else if (std::count(std::begin(ObsArray), std::end(ObsArray), cellAsObstacle)) {
+                line.push_back(OBSTACLE);
+            }
+
+
+            /*for each (Obstacle Obs in ObsArray)
             {
                 if ((row == Obs.getY()) && (col == Obs.getX())) {
                     line.push_back(OBSTACLE);
                 }
-            }
-            // needs changing to for each loop to account for collection of obstacles
-            
-            if ((row == pellet.getY()) && (col == pellet.getX())){
+            }*/
+
+            else if ((row == pellet.getY()) && (col == pellet.getX())) {
                 line.push_back(PELLET);
             }
             else
@@ -182,6 +193,8 @@ vector<vector<char>> Game::PrepareGrid()
                 line.push_back(FLOOR);
             }
         }
+
+
 
         // now that the row is full, add it to the 2D grid
         grid.push_back(line);

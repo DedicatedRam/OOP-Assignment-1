@@ -30,6 +30,10 @@ int Obstacle::getX() {
 int Obstacle::getY() {
 	return this->y;
 }
+bool Obstacle::operator==(const Obstacle& rhs) const
+{
+	return this->x==rhs.x & this->y==rhs.y;
+}
 void Obstacle::setX(int X) {
 	this->x = X;
 }
