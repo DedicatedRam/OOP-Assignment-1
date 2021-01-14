@@ -57,6 +57,15 @@ void Player::Move(int key)
     }
 }
 
+void Player::setY(int Y)
+{
+    this->y = Y;
+}
+
+void Player::setX(int X) {
+    this->x = X;
+}
+
 bool Player::isAlive() {
     return this->alive;
 }

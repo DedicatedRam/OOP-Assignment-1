@@ -20,26 +20,31 @@ int main()
 
         if (game.IsRunning())
         {
-            if (IsKeyDown(KEY_RIGHT)) { 
+            if (IsKeyPressed(KEY_RIGHT)) { 
                 game.setLastKeyPressed(KEY_RIGHT); 
-                game.ProcessInput(KEY_RIGHT);  
+                game.ProcessInput(KEY_RIGHT);
+                
+                  
             }
-            if (IsKeyDown(KEY_LEFT))  { 
+            if (IsKeyPressed(KEY_LEFT))  { 
                 game.setLastKeyPressed(KEY_LEFT);
                 game.ProcessInput(KEY_LEFT); 
                 
             }
 
-            if (IsKeyDown(KEY_UP))    {
+            if (IsKeyPressed(KEY_UP))    {
                 game.setLastKeyPressed(KEY_UP);
                 game.ProcessInput(KEY_UP); 
                 
             }
 
-            if (IsKeyDown(KEY_DOWN))  {
+            if (IsKeyPressed(KEY_DOWN))  {
 
                 game.setLastKeyPressed(KEY_DOWN);
                 game.ProcessInput(KEY_DOWN);
+            }
+            else if ((!IsKeyPressed(KEY_DOWN)) && (!IsKeyPressed(KEY_UP)) && (!IsKeyPressed(KEY_LEFT)) && (!IsKeyPressed(KEY_RIGHT))) {
+                game.ProcessInput(game.getLastKeyPressed());
             }
             string info = to_string(game.getPlayer().GetX()) + to_string(game.getPlayer().GetY());
             DrawText(info.c_str(), 610, 70, 20, BLACK);

@@ -17,6 +17,8 @@ class Player
 
         // mutators
         void Move(int key);
+        void setX(int X);
+        void setY(int Y);
 
         char symbol;
         int  x, y;
@@ -27,6 +29,7 @@ class Player
         bool escaped;
         int dx;
         int dy;
+        
 
         // supporting functions 
         void PositionInMiddleOfGrid();

@@ -1,4 +1,5 @@
 #pragma once
+#include "raylib.h"
 #include <dos.h>
 #include <stdio.h>
 #include <assert.h>	
@@ -17,7 +18,7 @@ using namespace std;
 class Game
 {
 private:
-    Obstacle ObsArray[10];
+    Obstacle ObsArray[100];
     bool directionChanged;
     int Score=0;
     int level=1;
@@ -36,6 +37,7 @@ private:
       bool IsWallAtPosition(int x, int y); // TODO: can have one of these for pellets too
       void genPellet();
       void genObs();
+      void genObsLvl4();
       void checkIfEaten();
       int getLastKeyPressed();
       void setLastKeyPressed(int key);
@@ -43,4 +45,5 @@ private:
       void checkObsCol();
       int getLevel();
       Obstacle randObsGen();
+      Obstacle obsGen(int x, int y);
 };
