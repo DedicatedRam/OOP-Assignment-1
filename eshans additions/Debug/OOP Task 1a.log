@@ -1,0 +1,25 @@
+﻿  Game.cpp
+C:\Users\Ollie\Desktop\eshans additions\Game.cpp(15,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Ollie\Desktop\eshans additions\Game.cpp(199,38): warning C4018: '<': signed/unsigned mismatch
+  Obstacle.cpp
+C:\Users\Ollie\Desktop\eshans additions\Obstacle.cpp(35,40): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+  Pellet.cpp
+  Player.cpp
+  PlayerTail.cpp
+  RandomNumberGenerator.cpp
+  Source.cpp
+  Tile.cpp
+  Wall.cpp
+  Generating Code...
+  raylib_static.lib(core.obj) : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
+LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Generating code
+  Finished generating code
+raylib_static.lib(core.obj) : warning LNK4099: PDB 'raylib.pdb' was not found with 'raylib_static.lib(core.obj)' or at 'C:\Users\Ollie\Desktop\eshans additions\Debug\raylib.pdb'; linking object as if no debug info
+raylib_static.lib(shapes.obj) : warning LNK4099: PDB 'raylib.pdb' was not found with 'raylib_static.lib(shapes.obj)' or at 'C:\Users\Ollie\Desktop\eshans additions\Debug\raylib.pdb'; linking object as if no debug info
+raylib_static.lib(text.obj) : warning LNK4099: PDB 'raylib.pdb' was not found with 'raylib_static.lib(text.obj)' or at 'C:\Users\Ollie\Desktop\eshans additions\Debug\raylib.pdb'; linking object as if no debug info
+raylib_static.lib(rglfw.obj) : warning LNK4099: PDB 'raylib.pdb' was not found with 'raylib_static.lib(rglfw.obj)' or at 'C:\Users\Ollie\Desktop\eshans additions\Debug\raylib.pdb'; linking object as if no debug info
+raylib_static.lib(textures.obj) : warning LNK4099: PDB 'raylib.pdb' was not found with 'raylib_static.lib(textures.obj)' or at 'C:\Users\Ollie\Desktop\eshans additions\Debug\raylib.pdb'; linking object as if no debug info
+raylib_static.lib(utils.obj) : warning LNK4099: PDB 'raylib.pdb' was not found with 'raylib_static.lib(utils.obj)' or at 'C:\Users\Ollie\Desktop\eshans additions\Debug\raylib.pdb'; linking object as if no debug info
+  OOP Task 1a.vcxproj -> C:\Users\Ollie\Desktop\eshans additions\Debug\OOP Task 1a.exe
