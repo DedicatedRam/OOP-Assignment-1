@@ -12,12 +12,14 @@
 #include <chrono>
 #include <thread>
 #include "Obstacle.h"
+#include "PlayerTail.h"
 
 using namespace std;
 
 class Game
 {
 private:
+    PlayerTail tail;
     Obstacle ObsArray[100];
     bool directionChanged;
     int Score=0;
@@ -42,6 +44,10 @@ private:
       int getLastKeyPressed();
       void setLastKeyPressed(int key);
       int getScore();
+      void setScore(int s);
+      void setLevel(int l);
+      void Reset();
+      void clearObs();
       void checkObsCol();
       int getLevel();
       Obstacle randObsGen();

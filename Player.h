@@ -1,5 +1,5 @@
 #pragma once
-
+//#include "Game.h"
 #include "constants.h"
 
 class Player
@@ -16,7 +16,7 @@ class Player
         bool isAlive();
 
         // mutators
-        void Move(int key);
+        void Move(int key, int time);
         void setX(int X);
         void setY(int Y);
 

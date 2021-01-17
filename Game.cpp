@@ -17,7 +17,24 @@ void Game::Setup()
     genPellet();
     genObs();
 
+    
 
+
+}
+
+void Game::Reset() {
+    setLevel(1);
+    setScore(0);
+    this->gameRunning = true;
+    clearObs();
+}
+
+void Game::setLevel(int l) {
+    this->level = l;
+}
+
+void Game::setScore(int s) {
+    this->Score = s;
 }
 
 Player Game::getPlayer() {
@@ -32,11 +49,20 @@ void Game::checkIfEaten()
 {
     if ((player.GetX() == pellet.getX()) && (player.GetY() == pellet.getY())) {
 
-        cout << pellet.getX() << ", " << pellet.getY() << endl;
+        //cout << pellet.getX() << ", " << pellet.getY() << endl;
         genPellet();
         Score++;
+        for (int i = 0; i < tail.getLength(); i++)
+        {
+            cout << tail.returnArrayX()[i] << ", " << tail.returnArrayY()[i] << endl;
+        }
+       // cout << "Array: " << tail.returnArrayX()[0] << ", " << tail.returnArrayY()[0] << endl;
+        tail.extendTail();
         genObs();
+
     }
+    tail.updateXArr(player.GetX());
+    tail.updateYArr(player.GetY());
 
 }
 
@@ -58,11 +84,11 @@ Obstacle Game::randObsGen() {
     do
     {
         r2 = rand() % (20);
-    } while ((r2 == 0) && (r2 != pellet.getY()) && (r2 != player.GetY()));
+    } while ((r2 == 0) && (r2 != pellet.getY()) && (r2 != player.GetY()) && (r2 != player.GetY()+1) && (r2 != player.GetY()+2) && (r2 != player.GetY() - 1) && (r2 != player.GetY() - 2));
     do
     {
         r1 = rand() % (20) ;
-    } while ((r1 == 0) && (r1 != pellet.getX()) && (r1 != player.GetX()));
+    } while ((r1 == 0) && (r1 != pellet.getX()) && (r1 != player.GetX()) && (r1 != player.GetX() + 1) && (r1 != player.GetX() + 2) && (r1 != player.GetX() - 1) && (r1 != player.GetX() - 2));;
     Obstacle ob(r1+1, r2+1);
 
     return ob;
@@ -234,7 +260,12 @@ void Game::genPellet() {
     this->pellet = p;
 }
 
-
+void Game::clearObs() {
+    for (int i = 0; i < 100; i++)
+    {
+        ObsArray[i] = obsGen(0, 0);
+    }
+}
 
 int Game::getLastKeyPressed() {
     return this->lastKeyPressed;
@@ -262,12 +293,13 @@ void Game::ProcessInput(int key)
     int curLevel = getLevel();
     int waitTime = (300 / curLevel);
 
-    
-    player.Move(key);
+
+    player.Move(key, waitTime);
+
     checkIfEaten();
     checkObsCol();
 
-    this_thread::sleep_for(chrono::milliseconds(waitTime));
+    this_thread::sleep_for(chrono::milliseconds(150));
 }
 
 /// <summary>
@@ -288,6 +320,13 @@ vector<vector<char>> Game::PrepareGrid()
         // for each column, work out what's in that position and add the relevant char to the 2D grid
         for (int col = 1; col <= SIZE; ++col)
         {
+            for (int i = 0; i < tail.getLength(); i++)
+            {
+                if ((row == tail.returnArrayY()[i]) && (col == tail.returnArrayX()[i])) {
+                    line.push_back(PLAYERTAIL);
+                }
+            }
+
             Obstacle cellAsObstacle(col, row);
             if (row == player.GetY() && col == player.GetX())
             {
@@ -304,14 +343,6 @@ vector<vector<char>> Game::PrepareGrid()
             else if (std::count(std::begin(ObsArray), std::end(ObsArray), cellAsObstacle)) {
                 line.push_back(OBSTACLE);
             }
-
-
-            /*for each (Obstacle Obs in ObsArray)
-            {
-                if ((row == Obs.getY()) && (col == Obs.getX())) {
-                    line.push_back(OBSTACLE);
-                }
-            }*/
 
             else if ((row == pellet.getY()) && (col == pellet.getX())) {
                 line.push_back(PELLET);
