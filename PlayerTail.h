@@ -6,7 +6,7 @@ using namespace std;
 
 class PlayerTail: public Player{;
 private :
-	int tailLength = 1;
+	int tailLength = 0;
 	vector<int> prevXpos = { 0 };
 	vector<int> prevYpos = { 0 };
 	//int prevXpos[25] = { 0 };// init these values to 0

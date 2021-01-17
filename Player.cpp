@@ -26,7 +26,7 @@ bool Player::IsAtPosition(int x, int y)
     return this->x == x && this->y == y;
 }
 
-void Player::Move(int key, int time)
+void Player::Move(int key)
 {
     //this_thread::sleep_for(chrono::milliseconds(time));
     switch (key)

@@ -294,12 +294,12 @@ void Game::ProcessInput(int key)
     int waitTime = (300 / curLevel);
 
 
-    player.Move(key, waitTime);
+    player.Move(key);
 
     checkIfEaten();
     checkObsCol();
 
-    this_thread::sleep_for(chrono::milliseconds(150));
+    this_thread::sleep_for(chrono::milliseconds(waitTime));
 }
 
 /// <summary>
@@ -320,12 +320,6 @@ vector<vector<char>> Game::PrepareGrid()
         // for each column, work out what's in that position and add the relevant char to the 2D grid
         for (int col = 1; col <= SIZE; ++col)
         {
-            for (int i = 0; i < tail.getLength(); i++)
-            {
-                if ((row == tail.returnArrayY()[i]) && (col == tail.returnArrayX()[i])) {
-                    line.push_back(PLAYERTAIL);
-                }
-            }
 
             Obstacle cellAsObstacle(col, row);
             if (row == player.GetY() && col == player.GetX())
@@ -347,9 +341,21 @@ vector<vector<char>> Game::PrepareGrid()
             else if ((row == pellet.getY()) && (col == pellet.getX())) {
                 line.push_back(PELLET);
             }
-            else
+            else 
             {
-                line.push_back(FLOOR);
+                bool isTailFound = false;
+                for (int i = 0; i < tail.getLength(); i++)
+                {
+                    if ((row == tail.returnArrayY()[i]) && (col == tail.returnArrayX()[i])) {
+                        line.push_back(PLAYERTAIL);
+                        isTailFound = true;
+                        break;
+                    }
+                }
+                if (!isTailFound) {
+                    line.push_back(FLOOR);
+                }
+                
             }
         }
 

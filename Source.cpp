@@ -5,7 +5,7 @@ int main()
 {
 	InitWindow(900, 600, "OOP Assignment 1");
 	SetTargetFPS(60);
-	string fileNameWood = "./resources/woodIMG.png";
+	string fileNameWood = "./resources/eagle.png";
 	string fileNameSnakeHead = "./resources/snakeHead.png";
 	string fileNameSnakeTail = "./resources/snakeTail.png";
 	string fileNameRat = "./resources/rat.png";
@@ -84,6 +84,7 @@ int main()
 				int yPosition = y * cellSize;
 				int lastKey = game.getLastKeyPressed();
 				float rotation = 0;
+				float tailRot = 0;
 				switch (lastKey)
 				{
 				case KEY_RIGHT: rotation = 0; break;
@@ -99,12 +100,23 @@ int main()
 				case WALL:   DrawRectangle(xPosition, yPosition, cellSize, cellSize, LIGHTGRAY); break;
 				case PLAYER:  DrawTexturePro(head, { 0.0f,0.0f,(float)head.width,(float)head.height }, { (float)xPosition+(cellSize/2),(float)yPosition + (cellSize / 2),(float)cellSize, (float)cellSize }, {(float) cellSize/2, (float)cellSize/2 }, rotation, WHITE); break;
 				case FLOOR:  DrawTexturePro(bckGround, { 0.0f,0.0f,(float)bckGround.width,(float)bckGround.height }, { (float)xPosition+(cellSize/2),(float)yPosition + (cellSize / 2),(float)cellSize, (float)cellSize }, {(float) cellSize/2, (float)cellSize/2 }, 0.0f, WHITE); break;
-				case OBSTACLE:  DrawTexturePro(wood, { 0.0f,0.0f,(float)wood.width,(float)wood.height }, { (float)xPosition+(cellSize/2),(float)yPosition + (cellSize / 2),(float)cellSize, (float)cellSize }, {(float) cellSize/2, (float)cellSize/2 }, 0.0f, WHITE); break;
+
+
+				case OBSTACLE:  DrawTexturePro(wood, { 0.0f,0.0f,(float)wood.width,(float)wood.height }, 
+					{ (float)xPosition + (cellSize/2),(float)yPosition + (cellSize/2),
+					(float)cellSize, (float)cellSize }, 
+					{(float) cellSize/2, (float)cellSize/2 },
+					0.0f, WHITE); break;
+
+
+
 				case PELLET:  DrawTexturePro(rat, { 0.0f,0.0f,(float)rat.width,(float)rat.height }, { (float)xPosition+(cellSize/2),(float)yPosition + (cellSize / 2),(float)cellSize, (float)cellSize }, {(float) cellSize/2, (float)cellSize/2 }, 0.0f, WHITE); break;
 				case PLAYERTAIL:  DrawTexturePro(tail, { 0.0f,0.0f,(float)tail.width,(float)tail.height }, { (float)xPosition+(cellSize/2),(float)yPosition + (cellSize / 2),(float)cellSize, (float)cellSize }, {(float) cellSize/2, (float)cellSize/2 }, rotation, WHITE); break;
 				//case PLAYERTAIL: DrawRectangle(xPosition, yPosition, cellSize, cellSize, BLUE);  break;
 				default:     assert(false);  // if this hits you probably forgot to add your new tile type :)
 				}
+
+
 
 				// draw lines around each tile, remove this if you don't like it!
 				//DrawRectangleLines(x * cellSize, y * cellSize, cellSize, cellSize, DARKGRAY);
