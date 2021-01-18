@@ -5,33 +5,55 @@ int main()
 {
 	InitWindow(900, 600, "OOP Assignment 1");
 	SetTargetFPS(60);
+	InitAudioDevice();
 	string fileNameWood = "./resources/eagle.png";
 	string fileNameSnakeHead = "./resources/snakeHead.png";
 	string fileNameSnakeTail = "./resources/snakeTail.png";
 	string fileNameRat = "./resources/rat.png";
 	string fileNameBackground = "./resources/background.png";
+	
 
+	string fileNameSnakeJazz = "./resources/jazz_Effect.mp3";
+	string fileNamePing = "./resources/pellet_Effect.mp3";
+	string fileNameHawk = "./resources/hawk_Effect.mp3";
+	
+	Sound ping = LoadSound(fileNamePing.c_str());
+	Sound hawk = LoadSound(fileNameHawk.c_str());
+	Sound jazz = LoadSound(fileNameSnakeJazz.c_str());
+	
+	
 	Texture2D head = LoadTexture(fileNameSnakeHead.c_str());
 	Texture2D tail = LoadTexture(fileNameSnakeTail.c_str());
 	Texture2D wood = LoadTexture(fileNameWood.c_str());
 	Texture2D rat = LoadTexture(fileNameRat.c_str());
 	Texture2D bckGround = LoadTexture(fileNameBackground.c_str());
+	PlaySound(jazz);
 
-
-	Game game;
+	Game game(ping,hawk);
 	game.Setup();
-
+	int frameNumber = 0;
 	while (!WindowShouldClose())
 	{
 		BeginDrawing();
 		ClearBackground(DARKGRAY);
 		string scoreText = "Your score: " + to_string(game.getScore());
 		string levelText = "Current level: " + to_string(game.getLevel());
+		string musicText = "To play/pause snake jazz press p";
+		DrawText(musicText.c_str(), 610, 100, 20, BLACK);
 		DrawText(scoreText.c_str(), 610, 10, 20, BLACK);
 		DrawText(levelText.c_str(), 610, 30, 20, BLACK);
 
 		if (game.IsRunning())
 		{
+			if (IsKeyPressed(KEY_P)) {
+				if (IsSoundPlaying(jazz) == true) {
+					PauseSound(jazz);
+				}
+				else
+				{
+					ResumeSound(jazz);
+				}
+			}
 			if (IsKeyPressed(KEY_RIGHT)) {
 				game.setLastKeyPressed(KEY_RIGHT);
 				game.ProcessInput(KEY_RIGHT);
@@ -122,9 +144,12 @@ int main()
 				//DrawRectangleLines(x * cellSize, y * cellSize, cellSize, cellSize, DARKGRAY);
 			}
 		}
+		frameNumber++;
+		frameNumber %= 60;
 		EndDrawing();
 	}
 
 	CloseWindow();
+	void CloseAudioDevice(void);
 	return 0;
 }

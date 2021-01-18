@@ -9,8 +9,6 @@ private :
 	int tailLength = 0;
 	vector<int> prevXpos = { 0 };
 	vector<int> prevYpos = { 0 };
-	//int prevXpos[25] = { 0 };// init these values to 0
-	//int prevYpos[25] = { 0 };
 	char symbol;
 
 public:
@@ -23,6 +21,7 @@ public:
 	int getLength();
 	vector<int> returnArrayY();
 	vector<int> returnArrayX();
+	void setLength(int len);
 
 
 };

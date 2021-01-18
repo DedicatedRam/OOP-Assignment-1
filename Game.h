@@ -25,6 +25,8 @@ private:
     int Score=0;
     int level=1;
     bool gameRunning = true;
+    Sound ping;
+    Sound hawk;
    public:
        int lastKeyPressed;
        Obstacle obs;
@@ -36,7 +38,7 @@ private:
       vector<vector<char>> PrepareGrid();
       Player getPlayer();
       bool IsRunning();
-      bool IsWallAtPosition(int x, int y); // TODO: can have one of these for pellets too
+      bool IsWallAtPosition(int x, int y); 
       void genPellet();
       void genObs();
       void genObsLvl4();
@@ -52,4 +54,5 @@ private:
       int getLevel();
       Obstacle randObsGen();
       Obstacle obsGen(int x, int y);
+      Game(Sound sf1, Sound sf2);
 };

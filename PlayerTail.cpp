@@ -34,3 +34,7 @@ std::vector<int> PlayerTail::returnArrayY() {
 std::vector<int> PlayerTail::returnArrayX() {
 	return this->prevXpos;
 }
+
+void PlayerTail::setLength(int len) {
+	this->tailLength = len;
+}

@@ -6,6 +6,11 @@
 #include <iostream>
 
 
+Game::Game(Sound sf1, Sound sf2) {
+    this->ping = sf1;
+    this->hawk = sf2;
+}
+
 int Game::getLevel() {
     return this->level;
 }
@@ -16,15 +21,16 @@ void Game::Setup()
     //assign the games pellet at some random position
     genPellet();
     genObs();
-
+    
     
 
 
 }
 
 void Game::Reset() {
+    tail.setLength(0);
     setLevel(1);
-    setScore(0);
+    setScore(1);
     this->gameRunning = true;
     clearObs();
 }
@@ -49,17 +55,16 @@ void Game::checkIfEaten()
 {
     if ((player.GetX() == pellet.getX()) && (player.GetY() == pellet.getY())) {
 
-        //cout << pellet.getX() << ", " << pellet.getY() << endl;
+        cout << "Pellet loc: (" << pellet.getX() << ", " << pellet.getY() << ")" << endl;
         genPellet();
         Score++;
         for (int i = 0; i < tail.getLength(); i++)
         {
             cout << tail.returnArrayX()[i] << ", " << tail.returnArrayY()[i] << endl;
         }
-       // cout << "Array: " << tail.returnArrayX()[0] << ", " << tail.returnArrayY()[0] << endl;
         tail.extendTail();
         genObs();
-
+        PlaySound(ping);
     }
     tail.updateXArr(player.GetX());
     tail.updateYArr(player.GetY());
@@ -73,6 +78,7 @@ void Game::checkObsCol() {
     {
         
         if ((player.GetX() == Obs.getX()) && (player.GetY() == Obs.getY())) {
+            PlaySound(hawk);
             this->gameRunning = false;
         }
     }
@@ -278,21 +284,20 @@ void Game::setLastKeyPressed(int key) {
 
 void Game::ProcessInput(int key)
 {
-    if ((Score == 5) && (level == 1)) {
+    if ((Score == 2) && (level == 1)) {
         level = 2;
         Score = 0;
     }
-    if ((Score == 5) && (level == 2)) {
+    if ((Score == 2) && (level == 2)) {
         level = 3;
         Score = 0;
     }
-    if ((Score == 5) && (level == 3)) {
+    if ((Score == 2) && (level == 3)) {
         level = 4;
         Score = 0;
     }
     int curLevel = getLevel();
-    int waitTime = (300 / curLevel);
-
+    int waitTime = (450 / curLevel);
 
     player.Move(key);
 
@@ -301,6 +306,7 @@ void Game::ProcessInput(int key)
 
     this_thread::sleep_for(chrono::milliseconds(waitTime));
 }
+
 
 /// <summary>
 /// This function builds up a 2D grid of characters representing the current state of the game.
