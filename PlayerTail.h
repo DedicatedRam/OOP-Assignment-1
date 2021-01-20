@@ -22,6 +22,7 @@ public:
 	vector<int> returnArrayY();
 	vector<int> returnArrayX();
 	void setLength(int len);
+	bool checkForCol(Player user);
 
 
 };

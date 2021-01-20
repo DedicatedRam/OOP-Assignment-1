@@ -3,7 +3,7 @@
 #include <dos.h>
 #include <stdio.h>
 #include <assert.h>	
-#include <string>		
+#include <string>
 #include <vector>
 #include "Player.h"
 #include "Wall.h"
@@ -50,6 +50,8 @@ private:
       void setLevel(int l);
       void Reset();
       void clearObs();
+      void readSaveFile();
+      void saveScoreToFile(int level, int score);
       void checkObsCol();
       int getLevel();
       Obstacle randObsGen();

@@ -4,7 +4,33 @@
 #include "Pellet.h"
 #include "Player.h"
 #include <iostream>
+#include <fstream>
+#include <stdio.h>
+#include <string>
+#define _GNU_SOURCE
 
+
+void Game::readSaveFile() {
+    ifstream readFile;
+    readFile.open("./resources/scoreSaves.txt", ios::in);
+    if (readFile.is_open()) {
+        string tp;
+        while (getline(readFile, tp)) {
+            cout << tp << endl;
+        }
+        readFile.close();
+    }
+}
+
+void Game::saveScoreToFile(int level, int score) {
+    ofstream saveFile;
+    saveFile.open("./resources/scoreSaves.txt");
+    cout << "Please enter your save name: " << endl;
+    string name;
+    cin >> name;
+    saveFile << "Name: " << name << " Level: " << level << " Score: " << score << endl;
+    saveFile.close();
+}
 
 Game::Game(Sound sf1, Sound sf2) {
     this->ping = sf1;
@@ -31,6 +57,7 @@ void Game::Reset() {
     tail.setLength(0);
     setLevel(1);
     setScore(1);
+    cout << "reset" << endl;
     this->gameRunning = true;
     clearObs();
 }
@@ -55,13 +82,8 @@ void Game::checkIfEaten()
 {
     if ((player.GetX() == pellet.getX()) && (player.GetY() == pellet.getY())) {
 
-        cout << "Pellet loc: (" << pellet.getX() << ", " << pellet.getY() << ")" << endl;
         genPellet();
         Score++;
-        for (int i = 0; i < tail.getLength(); i++)
-        {
-            cout << tail.returnArrayX()[i] << ", " << tail.returnArrayY()[i] << endl;
-        }
         tail.extendTail();
         genObs();
         PlaySound(ping);
@@ -73,12 +95,12 @@ void Game::checkIfEaten()
 
 
 void Game::checkObsCol() {
-    int x = 0;
     for each (Obstacle Obs in ObsArray)
     {
         
         if ((player.GetX() == Obs.getX()) && (player.GetY() == Obs.getY())) {
             PlaySound(hawk);
+            cout << "obs col - game end" << endl;
             this->gameRunning = false;
         }
     }
@@ -90,11 +112,12 @@ Obstacle Game::randObsGen() {
     do
     {
         r2 = rand() % (20);
-    } while ((r2 == 0) && (r2 != pellet.getY()) && (r2 != player.GetY()) && (r2 != player.GetY()+1) && (r2 != player.GetY()+2) && (r2 != player.GetY() - 1) && (r2 != player.GetY() - 2));
+    } while ((r2 == 0) && (r2 == pellet.getY()) && (r2 == player.GetY()) && (r2 == player.GetY()+1) && (r2 == player.GetY()+2) && (r2 == player.GetY() - 1) && (r2 == player.GetY() - 2));
     do
     {
         r1 = rand() % (20) ;
-    } while ((r1 == 0) && (r1 != pellet.getX()) && (r1 != player.GetX()) && (r1 != player.GetX() + 1) && (r1 != player.GetX() + 2) && (r1 != player.GetX() - 1) && (r1 != player.GetX() - 2));;
+    } while ((r1 == 0) && (r1 == pellet.getX()) && (r1 == player.GetX()) && (r1 == player.GetX() + 1) && (r1 == player.GetX() + 2) && (r1 == player.GetX() - 1) && (r1 == player.GetX() - 2));;
+    
     Obstacle ob(r1+1, r2+1);
 
     return ob;
@@ -259,8 +282,8 @@ void Game::genPellet() {
     {
         r1 = rand() % (20);
     } while (r1 == 0);
-
-    Pellet p(r1, r2);
+    cout << "New pellet: (" << r1 << ", " << r2 << ")" << endl;
+    Pellet p(r1 +1, r2+1);
     //set the pellets position
     //assign this pellet to the game
     this->pellet = p;
@@ -303,7 +326,11 @@ void Game::ProcessInput(int key)
 
     checkIfEaten();
     checkObsCol();
-
+    //tail.checkForCol(player);
+    if (tail.checkForCol(player) == true) {
+        cout << "tail colision - game end" << endl;
+        gameRunning = false;
+    }
     this_thread::sleep_for(chrono::milliseconds(waitTime));
 }
 

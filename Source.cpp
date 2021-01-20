@@ -3,7 +3,7 @@
 
 int main()
 {
-	InitWindow(900, 600, "OOP Assignment 1");
+	InitWindow(1200, 600, "OOP Assignment 1");
 	SetTargetFPS(60);
 	InitAudioDevice();
 	string fileNameWood = "./resources/eagle.png";
@@ -85,12 +85,21 @@ int main()
 		}
 		else
 		{
-			DrawText("You died!", 610, 50, 40, LIGHTGRAY);
-			DrawText("Press e to play", 610, 80, 30, LIGHTGRAY);
-			DrawText("again", 610, 100, 30, LIGHTGRAY);
+			DrawText("You died!", 610, 145, 40, LIGHTGRAY);
+			DrawText("Press e to play again", 610, 180, 20, LIGHTGRAY);
+			DrawText("Press f to save your score", 610, 200, 20, LIGHTGRAY);
+			DrawText("by entering your name and clicking enter in console.", 610, 220, 20, LIGHTGRAY);
+			DrawText("Press G to see scores", 610, 240, 20, LIGHTGRAY);
+			if (IsKeyPressed(KEY_G)) {
+				game.readSaveFile();
+			}
 			if (IsKeyPressed(KEY_E)) {
 				game.Reset();
 				game.Setup();
+			}
+			if (IsKeyPressed(KEY_F)) {
+				game.saveScoreToFile(game.getLevel(), game.getScore());
+				
 			}
 		}
 
@@ -134,7 +143,7 @@ int main()
 
 				case PELLET:  DrawTexturePro(rat, { 0.0f,0.0f,(float)rat.width,(float)rat.height }, { (float)xPosition+(cellSize/2),(float)yPosition + (cellSize / 2),(float)cellSize, (float)cellSize }, {(float) cellSize/2, (float)cellSize/2 }, 0.0f, WHITE); break;
 				case PLAYERTAIL:  DrawTexturePro(tail, { 0.0f,0.0f,(float)tail.width,(float)tail.height }, { (float)xPosition+(cellSize/2),(float)yPosition + (cellSize / 2),(float)cellSize, (float)cellSize }, {(float) cellSize/2, (float)cellSize/2 }, rotation, WHITE); break;
-				//case PLAYERTAIL: DrawRectangle(xPosition, yPosition, cellSize, cellSize, BLUE);  break;
+				
 				default:     assert(false);  // if this hits you probably forgot to add your new tile type :)
 				}
 
